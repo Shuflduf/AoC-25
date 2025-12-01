@@ -1,5 +1,5 @@
-mod one_1;
+mod one;
 
 fn main() {
-    one_1::run()
+    one::run()
 }
