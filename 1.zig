@@ -1,20 +1,15 @@
 const std = @import("std");
+const utils = @import("utils.zig");
 const print = std.debug.print;
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
+    const alloc = gpa.allocator();
 
-    const file_path = "inputs/1.txt";
+    const file_contents = try utils.read_input(alloc, "inputs/1.txt");
+    defer alloc.free(file_contents);
 
-    const file_contents: []u8 = try std.fs.cwd().readFileAlloc(
-        allocator,
-        file_path,
-        std.math.maxInt(usize),
-    );
-    defer allocator.free(file_contents);
-
-    var line_iter = std.mem.splitAny(u8, file_contents, "\n");
+    var line_iter = std.mem.splitSequence(u8, file_contents, "\n");
 
     var position: i16 = 50;
     var partOneSolution: u16 = 0;
