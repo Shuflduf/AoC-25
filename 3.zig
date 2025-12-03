@@ -11,10 +11,26 @@ pub fn main() !void {
     // ;
     var line_iter = std.mem.splitAny(u8, input, "\n");
     var part_one_solution: u32 = 0;
+    var part_two_solution: u64 = 0;
+    // var part_two_slice: [12]u8 = [_]u8{'0'} ** 12;
 
     while (line_iter.next()) |bank| {
         if (bank.len < 1) break;
-        // print("{s}\n", .{bank});
+        print("{s}\n", .{bank});
+
+        var larger_joltage: [12]u8 = [_]u8{'0'} ** 12;
+        var last_index: usize = 0;
+        for (0..larger_joltage.len) |slice_i| {
+            for (last_index..bank.len - (11 - slice_i)) |bank_i| {
+                if (bank[bank_i] > larger_joltage[slice_i]) {
+                    larger_joltage[slice_i] = bank[bank_i];
+                    last_index = bank_i + 1;
+                }
+            }
+        }
+        print("joltage (s) {s}\n", .{larger_joltage});
+        // print("joltage (d) {d}\n", .{str_to_num(&larger_joltage)});
+        part_two_solution += str_to_num(&larger_joltage);
 
         var largest_first: u8 = '0';
         var largest_index: usize = 0;
@@ -39,4 +55,14 @@ pub fn main() !void {
         part_one_solution += joltage;
     }
     print("Part 1: {d}\n", .{part_one_solution});
+    print("Part 2: {d}\n", .{part_two_solution});
+}
+
+pub fn str_to_num(str: []const u8) u64 {
+    var sum: u64 = 0;
+    for (str) |char| {
+        sum *= 10;
+        sum += char - '0';
+    }
+    return sum;
 }
