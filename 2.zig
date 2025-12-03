@@ -9,8 +9,6 @@ pub fn main() !void {
     const file_contents = try utils.read_input(alloc, "inputs/2.txt");
     defer alloc.free(file_contents);
 
-    // const file_contents = "11-22,95-115";
-
     var range_iter = std.mem.splitAny(u8, file_contents, ",\n");
     var partOneSolution: u64 = 0;
 
@@ -41,19 +39,15 @@ fn hasRepeats(test_number: u64) !bool {
     const num_slice = try std.fmt.bufPrint(&num_buf, "{d}", .{test_number});
 
     var test_size: usize = 1;
-    // print("{any}", .{@divFloor(num_slice.len, 2)});
 
     outer: while (test_size <= @divFloor(num_slice.len, 2)) : (test_size += 1) {
         if (@mod(num_slice.len, test_size) != 0) continue;
         if (num_slice.len == test_size) continue;
 
         const match_case = num_slice[0..test_size];
-        // print("{any}", .{@divFloor(num_slice.len, test_size)});
         for (1..@divFloor(num_slice.len, test_size)) |i| {
-            // print("{d} ", .{i});
             const match_slice = num_slice[(i * test_size)..((i + 1) * test_size)];
             if (!std.mem.eql(u8, match_case, match_slice)) continue :outer;
-            // print("{s} ", .{match_slice});
         }
         print(" I think {d} has repeats \n", .{test_number});
         return true;
