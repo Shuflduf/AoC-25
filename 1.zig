@@ -27,19 +27,11 @@ pub fn main() !void {
         const direction = if (line[0] == 'R') @as(i16, 1) else @as(i16, -1);
         const value = try std.fmt.parseInt(i16, line[1..], 10);
 
-        position += value * direction;
-        while (position < 0) {
-            position += 100;
-            partTwoSolution += 1;
-        }
-        while (position >= 100) {
-            position -= 100;
-            partTwoSolution += 1;
-        }
-        if (position == 0) {
-            partOneSolution += 1;
-            // partTwoSolution += 1;
-        }
+        partTwoSolution += @abs(@divFloor(position + value * direction, 100));
+        if (position == 0 and direction == -1) partTwoSolution -= 1;
+        position = @mod(position + value * direction, 100);
+        if (position == 0 and direction == -1) partTwoSolution += 1;
+        if (position == 0) partOneSolution += 1;
     }
 
     print("answer 1: {d} \n", .{partOneSolution});
