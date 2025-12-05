@@ -73,7 +73,7 @@ fn compressRanges(alloc: std.mem.Allocator, old_ranges: []FreshRange) []FreshRan
     print("og {any}\n", .{new_ranges});
     for (old_ranges) |range_to_add| {
         print("adding {any}\n", .{range_to_add});
-        addRange(std.mem.Allocator, range_to_add, &new_ranges);
+        addRange(alloc, range_to_add, &new_ranges);
         // if (new_range_added) compressed_size += 1;
     }
     return &new_ranges;
@@ -93,7 +93,7 @@ fn addRange(alloc: std.mem.Allocator, range: FreshRange, set: std.ArrayList(Fres
             }
         }
     }
-    set.addOne(gpa: Allocator)
+    (set.addOne(alloc) orelse unreachable) = range;
     // set[compressed_size] = range;
     return true;
 }
