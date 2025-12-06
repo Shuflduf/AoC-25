@@ -1,10 +1,6 @@
 use std::collections::HashSet;
 
 const INPUT: &str = include_str!("../inputs/6.txt");
-// const INPUT: &str = r"123 328  51 64
-//  45 64  387 23
-//   6 98  215 314
-// *   +   *   +  ";
 
 fn main() {
     let rows_iter = INPUT.split("\n");
@@ -20,9 +16,7 @@ fn main() {
         if row_length == 0 {
             row_length = row.len();
         }
-        // number_lists.reserve(1);
         for (i, token) in row.split_whitespace().enumerate() {
-            // println!("{token}");
             if token == "*" || token == "+" {
                 instructions.push(token.chars().next().unwrap());
             } else {
@@ -75,9 +69,6 @@ fn main() {
 
     for (problem_index, instruction) in instructions.iter().enumerate() {
         let digit_count = str_number_lists[problem_index][0].len();
-        // for num in str_number_lists[problem_index] {
-
-        // }
         let mut problem_solution: u64 = 0;
         for digit_index in 0..digit_count {
             let mut new_num: u64 = 0;
@@ -88,7 +79,6 @@ fn main() {
                     new_num += target_digit.to_string().parse::<u64>().unwrap();
                 }
             }
-            println!("{new_num}");
             if instruction == &'+' {
                 problem_solution += new_num;
             } else {
@@ -99,14 +89,7 @@ fn main() {
             }
         }
         part_two_solution += problem_solution
-        // if instruction == &'+' {
-        //     part_one_solution += number_lists[i].iter().sum::<u64>();
-        // } else {
-        //     part_one_solution += number_lists[i].iter().product::<u64>();
-        // }
     }
-
-    // println!("{number_lists:?}");
 
     println!("Part 1: {part_one_solution}");
     println!("Part 2: {part_two_solution}");
