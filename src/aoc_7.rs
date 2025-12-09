@@ -44,11 +44,6 @@ fn main() {
                 }
             }
         }
-
-        // println!("{line} {split_count}");
-        // if split_count > 0 {
-        //     part_two_solution *= split_count;
-        // }
     }
 
     println!("{current_beams:?}");
