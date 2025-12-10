@@ -1,14 +1,6 @@
 use std::cmp::{max, min};
 
 const INPUT: &str = include_str!("../inputs/9.txt");
-// const INPUT: &str = r"7,1
-// 11,1
-// 11,7
-// 9,7
-// 9,5
-// 2,5
-// 2,3
-// 7,3";
 
 fn main() {
     let mut part_one_solution = 0;
